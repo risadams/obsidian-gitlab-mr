@@ -17,8 +17,8 @@
 	"license": "MIT",
 	"devDependencies": {
 		"@types/node": "^20.11.0",
-		"@typescript-eslint/eslint-plugin": "^6.21.0",
-		"@typescript-eslint/parser": "^6.21.0",
+		"@typescript-eslint/eslint-plugin": "^8.69.0",
+		"@typescript-eslint/parser": "^8.69.0",
 		"builtin-modules": "^3.3.0",
 		"esbuild": "^0.20.0",
 		"obsidian": "^1.5.7",
