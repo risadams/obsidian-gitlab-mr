@@ -13,7 +13,7 @@
 		"gitlab",
 		"merge-request"
 	],
-	"author": "",
+	"author": "Ris Adams",
 	"license": "MIT",
 	"devDependencies": {
 		"@types/node": "^26.4.1",
