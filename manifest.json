@@ -1,0 +1,10 @@
+{
+	"id": "gitlab-mr",
+	"name": "GitLab Merge Request",
+	"version": "0.1.0",
+	"minAppVersion": "1.0.0",
+	"description": "Reference GitLab merge requests inline or in code blocks and see their live status, right in your notes.",
+	"author": "Chris",
+	"authorUrl": "",
+	"isDesktopOnly": false
+}

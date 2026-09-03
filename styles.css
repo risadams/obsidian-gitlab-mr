@@ -1,0 +1,103 @@
+.gitlab-mr-badge {
+	display: inline-flex;
+	align-items: center;
+	gap: 0.35em;
+	padding: 0.1em 0.6em;
+	border-radius: 999px;
+	border: 1px solid var(--background-modifier-border);
+	background-color: var(--background-secondary);
+	font-size: 0.85em;
+	line-height: 1.6;
+	white-space: nowrap;
+}
+
+.gitlab-mr-block-row {
+	margin-bottom: 0.35em;
+}
+
+.gitlab-mr-block-row:last-child {
+	margin-bottom: 0;
+}
+
+.gitlab-mr-badge.gitlab-mr-clickable {
+	cursor: pointer;
+}
+
+.gitlab-mr-badge.gitlab-mr-clickable:hover {
+	background-color: var(--background-modifier-hover);
+}
+
+.gitlab-mr-badge .gitlab-mr-title {
+	max-width: 28em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+
+.gitlab-mr-badge .gitlab-mr-iid,
+.gitlab-mr-badge .gitlab-mr-author {
+	opacity: 0.7;
+}
+
+.gitlab-mr-badge .gitlab-mr-state {
+	font-weight: 600;
+	padding: 0 0.4em;
+	border-radius: 4px;
+}
+
+.gitlab-mr-state-opened .gitlab-mr-state {
+	color: #2da44e;
+}
+
+.gitlab-mr-state-merged .gitlab-mr-state {
+	color: #8250df;
+}
+
+.gitlab-mr-state-closed .gitlab-mr-state {
+	color: #cf222e;
+}
+
+.gitlab-mr-state-locked .gitlab-mr-state {
+	color: var(--text-muted);
+}
+
+.gitlab-mr-badge.gitlab-mr-draft .gitlab-mr-state {
+	color: var(--text-muted);
+}
+
+.gitlab-mr-pipeline {
+	padding: 0 0.4em;
+	border-radius: 4px;
+	font-size: 0.9em;
+}
+
+.gitlab-mr-pipeline-success {
+	color: #2da44e;
+}
+
+.gitlab-mr-pipeline-failed {
+	color: #cf222e;
+}
+
+.gitlab-mr-pipeline-running,
+.gitlab-mr-pipeline-pending {
+	color: #bf8700;
+}
+
+.gitlab-mr-approvals {
+	color: var(--text-muted);
+}
+
+.gitlab-mr-conflict {
+	color: #cf222e;
+}
+
+.gitlab-mr-badge.gitlab-mr-loading {
+	color: var(--text-muted);
+	font-style: italic;
+}
+
+.gitlab-mr-badge.gitlab-mr-error {
+	border-color: var(--text-error);
+	color: var(--text-error);
+}
