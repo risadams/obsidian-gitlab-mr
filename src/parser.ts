@@ -1,12 +1,14 @@
 import { GitlabAccount, ParsedMrRef } from "./types";
 
 const URL_PATTERN = /^(https?:\/\/[^/]+)\/(.+?)\/-\/merge_requests\/(\d+)\/?$/i;
-const SHORTHAND_PATTERN = /^(?:([\w.-]+):)?([\w.\-/]+)!(\d+)$/;
+const SHORTHAND_PATTERN = /^(?:([\w.-]+):)?([\w.\-/]*)!(\d+)$/;
 
 /**
  * Parses a single merge request reference such as:
  *   group/project!123
  *   work:group/project!123
+ *   !123                                      (uses the resolved account's default project)
+ *   work:!123
  *   https://gitlab.example.com/group/project/-/merge_requests/123
  */
 export function parseMrRef(raw: string, accounts: GitlabAccount[]): ParsedMrRef | null {
@@ -58,6 +60,15 @@ export function resolveAccount(ref: ParsedMrRef, accounts: GitlabAccount[]): Git
 
 function stripTrailingSlash(url: string): string {
 	return url.replace(/\/+$/, "");
+}
+
+/**
+ * Resolves the project path for a reference, falling back to the account's
+ * configured default project when the reference omitted it (e.g. "!123").
+ */
+export function resolveProjectPath(ref: ParsedMrRef, account: GitlabAccount): string | null {
+	if (ref.projectPath) return ref.projectPath;
+	return account.defaultProjectPath?.trim() || null;
 }
 
 const CODE_BLOCK_LANGUAGE = "gitlab-mr";

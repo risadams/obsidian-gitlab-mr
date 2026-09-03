@@ -1,6 +1,6 @@
 import { MarkdownPostProcessorContext } from "obsidian";
 import type GitlabMrPlugin from "./main";
-import { parseMrRef, resolveAccount } from "./parser";
+import { parseMrRef, resolveAccount, resolveProjectPath } from "./parser";
 import { fetchMergeRequest, GitlabApiError } from "./gitlabClient";
 import { MergeRequestInfo } from "./types";
 
@@ -43,16 +43,25 @@ export async function renderMrReference(
 		return;
 	}
 
+	const projectPath = resolveProjectPath(ref, account);
+	if (!projectPath) {
+		setError(
+			wrapper,
+			`"${rawRef}" omits the project and account "${account.alias}" has no default project configured.`
+		);
+		return;
+	}
+
 	const host = ref.host ?? account.host;
-	const cached = plugin.cache.get(host, ref.projectPath, ref.iid);
+	const cached = plugin.cache.get(host, projectPath, ref.iid);
 	if (cached) {
 		renderBadge(plugin, wrapper, cached);
 		return;
 	}
 
 	try {
-		const info = await fetchMergeRequest({ ...account, host }, ref.projectPath, ref.iid);
-		plugin.cache.set(host, ref.projectPath, ref.iid, info);
+		const info = await fetchMergeRequest({ ...account, host }, projectPath, ref.iid);
+		plugin.cache.set(host, projectPath, ref.iid, info);
 		renderBadge(plugin, wrapper, info);
 	} catch (err) {
 		if (err instanceof GitlabApiError) {

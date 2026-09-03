@@ -12,6 +12,7 @@ Open **Settings → GitLab Merge Request** and add an account:
 - **Host** — your GitLab instance, e.g. `https://gitlab.com` or `https://gitlab.example.com`
 - **Token** — a personal or project access token with `read_api` scope
 - **Default** — toggle on for the account used when no alias is given
+- **Default project** — optional `group/project`; lets you reference its merge requests as just `!123`
 
 You can add multiple accounts for multiple GitLab instances.
 
@@ -22,8 +23,12 @@ You can add multiple accounts for multiple GitLab instances.
 ```
 `gitlab-mr:group/project!123`
 `gitlab-mr:work:group/project!123`
+`gitlab-mr:!123`
+`gitlab-mr:work:!123`
 `gitlab-mr:https://gitlab.example.com/group/project/-/merge_requests/123`
 ```
+
+`!123` and `work:!123` use the resolved account's configured default project.
 
 ### Code block
 

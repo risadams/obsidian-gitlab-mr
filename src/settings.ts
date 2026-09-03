@@ -18,6 +18,7 @@ export const DEFAULT_SETTINGS: GitlabMrSettings = {
 			host: "https://gitlab.com",
 			token: "",
 			isDefault: true,
+			defaultProjectPath: "",
 		},
 	],
 	cacheTtlMinutes: 15,
@@ -100,7 +101,8 @@ export class GitlabMrSettingTab extends PluginSettingTab {
 		containerEl.createEl("p", {
 			text:
 				"Configure one or more GitLab instances. Reference a non-default account in your notes with " +
-				"\"alias:group/project!123\". The default account is used when no alias is given.",
+				"\"alias:group/project!123\". The default account is used when no alias is given. Set a default " +
+				"project below to reference its merge requests with just \"!123\" (or \"alias:!123\").",
 			cls: "setting-item-description",
 		});
 
@@ -169,6 +171,19 @@ export class GitlabMrSettingTab extends PluginSettingTab {
 						this.display();
 					})
 			);
+
+			new Setting(containerEl)
+				.setName("")
+				.setDesc(`Default project for "${account.alias || `account ${index + 1}`}"`)
+				.addText((text) =>
+					text
+						.setPlaceholder("group/project")
+						.setValue(account.defaultProjectPath ?? "")
+						.onChange(async (value) => {
+							account.defaultProjectPath = value.trim();
+							await this.plugin.saveSettings();
+						})
+				);
 		});
 
 		new Setting(containerEl).addButton((btn) =>
@@ -181,6 +196,7 @@ export class GitlabMrSettingTab extends PluginSettingTab {
 						host: "https://gitlab.com",
 						token: "",
 						isDefault: false,
+						defaultProjectPath: "",
 					});
 					await this.plugin.saveSettings();
 					this.display();

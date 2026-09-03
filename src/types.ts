@@ -3,6 +3,7 @@ export interface GitlabAccount {
 	host: string; // e.g. https://gitlab.com
 	token: string; // personal/project access token
 	isDefault: boolean;
+	defaultProjectPath?: string; // e.g. group/project, used when a reference omits the project
 }
 
 export type MrState = "opened" | "closed" | "merged" | "locked";
