@@ -1,6 +1,6 @@
 {
 	"name": "obsidian-gitlab-mr",
-	"version": "0.1.1",
+	"version": "0.1.2",
 	"description": "Reference GitLab merge requests in Obsidian and see their live status.",
 	"main": "main.js",
 	"scripts": {
