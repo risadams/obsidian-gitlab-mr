@@ -26,7 +26,7 @@ export async function renderMrReference(
 	plugin: GitlabMrPlugin,
 	target: HTMLElement,
 	rawRef: string,
-	_ctx: MarkdownPostProcessorContext
+	_ctx?: MarkdownPostProcessorContext
 ): Promise<void> {
 	const wrapper = target.createSpan({ cls: "gitlab-mr-badge gitlab-mr-loading" });
 	wrapper.setText(`⏳ ${rawRef}`);

@@ -2,7 +2,8 @@ import { Plugin } from "obsidian";
 import { DEFAULT_SETTINGS, GitlabMrSettings, GitlabMrSettingTab } from "./settings";
 import { MrCache } from "./cache";
 import { renderMrReference } from "./renderer";
-import { INLINE_PREFIX, CODE_BLOCK_LANGUAGE } from "./parser";
+import { CODE_BLOCK_LANGUAGE } from "./parser";
+import { createLivePreviewExtension, renderInlineMrReferences } from "./inlineRenderer";
 
 export default class GitlabMrPlugin extends Plugin {
 	settings!: GitlabMrSettings;
@@ -13,6 +14,7 @@ export default class GitlabMrPlugin extends Plugin {
 		this.cache = new MrCache(() => this.settings.cacheTtlMinutes);
 
 		this.addSettingTab(new GitlabMrSettingTab(this.app, this));
+		this.registerEditorExtension(createLivePreviewExtension(this));
 
 		// ```gitlab-mr
 		// group/project!123
@@ -31,19 +33,9 @@ export default class GitlabMrPlugin extends Plugin {
 			}
 		});
 
-		// Inline code: `gitlab-mr:group/project!123`
+		// Inline references in Reading view, including plain text and inline code.
 		this.registerMarkdownPostProcessor(async (el, ctx) => {
-			const codeSpans = el.querySelectorAll("code");
-			const pending: Promise<void>[] = [];
-			codeSpans.forEach((code) => {
-				const text = code.textContent ?? "";
-				if (!text.startsWith(INLINE_PREFIX)) return;
-				const ref = text.slice(INLINE_PREFIX.length);
-				const container = createSpan();
-				code.replaceWith(container);
-				pending.push(renderMrReference(this, container, ref, ctx));
-			});
-			await Promise.all(pending);
+			await renderInlineMrReferences(this, el, ctx);
 		});
 	}
 

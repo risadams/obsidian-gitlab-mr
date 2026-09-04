@@ -20,13 +20,17 @@ You can add multiple accounts for multiple GitLab instances.
 
 ### Inline
 
+Plain prefixed references render in both Live Preview and Reading view:
+
 ```
-`gitlab-mr:group/project!123`
-`gitlab-mr:work:group/project!123`
-`gitlab-mr:!123`
-`gitlab-mr:work:!123`
-`gitlab-mr:https://gitlab.example.com/group/project/-/merge_requests/123`
+gitlab-mr:group/project!123
+gitlab-mr:work:group/project!123
+gitlab-mr:!123
+gitlab-mr:work:!123
+gitlab-mr:https://gitlab.example.com/group/project/-/merge_requests/123
 ```
+
+Inline-code references such as `` `gitlab-mr:!123` `` continue to render in Reading view.
 
 `!123` and `work:!123` use the resolved account's configured default project.
 

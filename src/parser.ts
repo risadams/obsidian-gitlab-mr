@@ -1,7 +1,35 @@
-import { GitlabAccount, ParsedMrRef } from "./types";
+import type { GitlabAccount, ParsedMrRef } from "./types";
+
+export const INLINE_PREFIX = "gitlab-mr:";
 
 const URL_PATTERN = /^(https?:\/\/[^/]+)\/(.+?)\/-\/merge_requests\/(\d+)\/?$/i;
 const SHORTHAND_PATTERN = /^(?:([\w.-]+):)?([\w.\-/]*)!(\d+)$/;
+const INLINE_URL_REF = String.raw`https?:\/\/[^\s<>()]+?\/-\/merge_requests\/\d+\/?`;
+const INLINE_SHORTHAND_REF = String.raw`(?:[\w.-]+:)?[\w.\-/]*!\d+`;
+
+export interface InlineMrMatch {
+	from: number;
+	to: number;
+	rawRef: string;
+}
+
+export function createInlineMrPattern(): RegExp {
+	return new RegExp(`${INLINE_PREFIX}(${INLINE_URL_REF}|${INLINE_SHORTHAND_REF})`, "g");
+}
+
+export function findInlineMrRefs(text: string): InlineMrMatch[] {
+	const pattern = createInlineMrPattern();
+	const matches: InlineMrMatch[] = [];
+	let match: RegExpExecArray | null;
+	while ((match = pattern.exec(text)) !== null) {
+		matches.push({
+			from: match.index,
+			to: match.index + match[0].length,
+			rawRef: match[1],
+		});
+	}
+	return matches;
+}
 
 /**
  * Parses a single merge request reference such as:
@@ -72,5 +100,4 @@ export function resolveProjectPath(ref: ParsedMrRef, account: GitlabAccount): st
 }
 
 const CODE_BLOCK_LANGUAGE = "gitlab-mr";
-export const INLINE_PREFIX = "gitlab-mr:";
 export { CODE_BLOCK_LANGUAGE };
