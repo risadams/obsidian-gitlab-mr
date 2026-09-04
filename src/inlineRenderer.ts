@@ -25,8 +25,8 @@ class GitlabMrWidget extends WidgetType {
 		return other.plugin === this.plugin && other.rawRef === this.rawRef;
 	}
 
-	toDOM(view: EditorView): HTMLElement {
-		const container = view.dom.ownerDocument.createElement("span");
+	toDOM(): HTMLElement {
+		const container = createSpan();
 		void renderMrReference(this.plugin, container, this.rawRef);
 		return container;
 	}
@@ -90,7 +90,7 @@ export async function renderInlineMrReferences(
 	el.querySelectorAll("code").forEach((code) => {
 		const text = code.textContent ?? "";
 		if (!text.startsWith(INLINE_PREFIX)) return;
-		const container = el.ownerDocument.createElement("span");
+		const container = createSpan();
 		code.replaceWith(container);
 		pending.push(renderMrReference(plugin, container, text.slice(INLINE_PREFIX.length), ctx));
 	});
@@ -110,11 +110,11 @@ export async function renderInlineMrReferences(
 		const matches = findInlineMrRefs(textNode.data);
 		if (matches.length === 0) continue;
 
-		const fragment = el.ownerDocument.createDocumentFragment();
+		const fragment = createFragment();
 		let cursor = 0;
 		for (const match of matches) {
 			fragment.append(textNode.data.slice(cursor, match.from));
-			const container = el.ownerDocument.createElement("span");
+			const container = createSpan();
 			fragment.append(container);
 			pending.push(renderMrReference(plugin, container, match.rawRef, ctx));
 			cursor = match.to;

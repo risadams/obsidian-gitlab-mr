@@ -40,8 +40,6 @@ export class GitlabMrSettingTab extends PluginSettingTab {
 		const { containerEl } = this;
 		containerEl.empty();
 
-		new Setting(containerEl).setName("GitLab Merge Request").setHeading();
-
 		new Setting(containerEl)
 			.setName("Cache duration (minutes)")
 			.setDesc("How long a merge request's status is cached before it is re-fetched from GitLab.")
