@@ -2,7 +2,7 @@
 	"id": "gitlab-mr",
 	"name": "GitLab Merge Request",
 	"version": "0.1.2",
-	"minAppVersion": "1.1.1",
+	"minAppVersion": "1.13.0",
 	"description": "Reference GitLab merge requests inline or in code blocks and see their live status, right in your notes.",
 	"author": "Ris Adams",
 	"authorUrl": "https://github.com/risadams",
