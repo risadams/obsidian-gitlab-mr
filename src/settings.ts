@@ -40,7 +40,7 @@ export class GitlabMrSettingTab extends PluginSettingTab {
 		const { containerEl } = this;
 		containerEl.empty();
 
-		containerEl.createEl("h2", { text: "GitLab Merge Request" });
+		new Setting(containerEl).setName("GitLab Merge Request").setHeading();
 
 		new Setting(containerEl)
 			.setName("Cache duration (minutes)")
@@ -97,7 +97,7 @@ export class GitlabMrSettingTab extends PluginSettingTab {
 				})
 			);
 
-		containerEl.createEl("h3", { text: "Accounts" });
+		new Setting(containerEl).setName("Accounts").setHeading();
 		containerEl.createEl("p", {
 			text:
 				"Configure one or more GitLab instances. Reference a non-default account in your notes with " +
